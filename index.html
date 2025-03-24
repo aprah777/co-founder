@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project MayFlower - AI + 入境游智能体 共创者招募</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 基础样式重置和全局设定 --- */
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Noto Sans SC', sans-serif; /* 全局中文字体 */
+            line-height: 1.7;
+            color: #333;
+            background-color: #f9f9f9; /* 浅灰色背景 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif; /* 标题英文字体，中文也可用 */
+            font-weight: 700;
+            color: #1e3a8a; /* 深蓝色标题颜色 */
+            line-height: 1.3;
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+        }
+        h1 { font-size: 3em; text-align: center; margin-top: 1em; margin-bottom: 1em; }
+        h2 { font-size: 2.2em; border-bottom: 2px solid #e0e0e0; padding-bottom: 0.5em; margin-top: 2em; }
+        h3 { font-size: 1.6em; margin-top: 1.8em; margin-bottom: 0.6em; color: #2e7d32; /* 深绿色小标题 */ }
+        p, ul, ol { margin-bottom: 1em; color: #555; font-size: 1.05em; }
+        ul, ol { padding-left: 25px; }
+        strong { font-weight: 600; color: #0d47a1; /* 深蓝色强调色 */ }
+        a { color: #007bff; text-decoration: none; transition: color 0.3s ease; }
+        a:hover { color: #0056b3; }
+        .emoji { font-size: 1.2em; vertical-align: middle; }
+        .container { max-width: 960px; margin: 0 auto; padding: 20px; } /* 限制内容宽度居中 */
+        .section { margin-bottom: 60px; }
+        .highlight-box { background-color: #fff8e1; border-left: 4px solid #ffc107; padding: 15px; border-radius: 3px; margin-bottom: 25px; }
+        .contact-section { text-align: center; padding-top: 40px; border-top: 1px dashed #ccc; margin-top: 60px; }
+        .contact-section h2 { border-bottom: none; }
+        .contact-button {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: #2e7d32; /* 深绿色按钮 */
+            color: white;
+            font-weight: 500;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        .contact-button:hover {
+            background-color: #1b5e20; /* 更深绿色 hover */
+            transform: scale(1.05);
+        }
+        .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; color: #777; font-size: 0.9em; }
+        .tech-skills { font-weight: bold; color: #2e7d32; } /* 深绿色技术栈 */
+        .step-item {
+            margin-bottom: 30px;
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s ease;
+        }
+        .step-item:hover { transform: translateY(-3px); } /* 轻微上移 hover 效果 */
+        .step-item h3 { color: #2e7d32; } /* 深绿色步骤标题 */
+        .step-item p { color: #666; }
+        .hero-section {
+            background-color: #e8f5e9; /* 浅绿色 Hero 背景 */
+            padding: 80px 20px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .hero-section h1 { color: #2e7d32; margin-bottom: 15px; } /* 深绿色 Hero 标题 */
+        .hero-section p { font-size: 1.25em; color: #555; }
+
+        /* --- 响应式设计 --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.3em; }
+            h2 { font-size: 1.8em; }
+            h3 { font-size: 1.4em; }
+            .hero-section { padding: 60px 20px; }
+        }
+
+        /* --- 微交互 CSS --- */
+        .nav-link {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 0 10px;
+            color: #555;
+            text-decoration: none;
+            position: relative; /* for underline animation */
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 100%;
+            height: 2px;
+            background-color: #2e7d32; /* 深绿色 underline */
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* --- 分隔线样式 --- */
+        .section-divider {
+            border-top: 1px solid #e0e0e0;
+            margin: 40px 0;
+        }
+
+        /* --- 关于创始人 May 版块样式 --- */
+        .founder-section {
+            background-color: #f0f4c3; /* 浅黄色背景，柔和温暖 */
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-bottom: 60px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .founder-section h2 {
+            color: #558b2f; /* 柔和的绿色标题 */
+            border-bottom-color: #e6ee9c; /* 浅黄色边框 */
+        }
+        .founder-section p {
+            color: #616161; /* 深灰色文字 */
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        .founder-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        .founder-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .founder-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .founder-title {
+            color: #777;
+            text-align: center;
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="hero-section">
+        <div class="container">
+            <h1><span class="emoji">🚀</span> Project MayFlower 共创者招募 <span class="emoji">🤝</span></h1>
+            <p>用 AI 重构入境游，寻找技术合伙人，一起打造面向全球市场的智能体系统！</p>
+            <p><strong>创始人 May (前 Hyatt 亚太分销战略负责人) 邀您登船，共赴千亿美金蓝海！</strong></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav>
+            <a href="#about" class="nav-link">项目概览</a>
+            <a href="#founder" class="nav-link">关于 May</a>
+            <a href="#project-mayflower" class="nav-link">Project MayFlower</a>
+            <a href="#problem" class="nav-link">行业痛点</a>
+            <a href="#progress" class="nav-link">当前进展</a>
+            <a href="#roadmap" class="nav-link">商业路径</a>
+            <a href="#who" class="nav-link">寻找伙伴</a>
+            <a href="#skills" class="nav-link">技能要求</a>
+            <a href="#cooperation" class="nav-link">合作方式</a>
+            <a href="#why-now" class="nav-link">为何现在</a>
+            <a href="#contact" class="nav-link">联系方式</a>
+        </nav>
+
+        <div class="section" id="about">
+            <h2><span class="emoji">💡</span>  AI 不止是技术，更是中国入境游的破局点</h2>
+            <p>中国入境游市场潜力巨大，但长期低迷。我们相信 <strong>AI 是重构产业链、讲好中国故事、抓住千亿级美元市场增量</strong> 的关键机会。</p>
+            <p>如果你不满足于模型调优、工具开发，渴望用技术创造更大价值，欢迎了解 Project MayFlower。</p>
+        </div>
+        <div class="section-divider"></div>
+
+        <!--  ---  优化后：关于创始人 May 版块 (加入教育背景) ---  -->
+        <div class="section founder-section" id="founder">
+            <h2><span class="emoji">🙋‍♀️</span>  关于创始人 May</h2>
+            <div class="founder-photo">
+                <img src="./may-photo.jpg" alt="May Yang - 创始人">  <!--  替换成你的照片  -->
+            </div>
+            <p class="founder-name">May Yang</p>
+            <p class="founder-title">AI酒旅实验室 创始人 | 前 Hyatt 亚太分销战略负责人</p>
+
+            <p>你好，我是 May，Project MayFlower 的发起人。我拥有香港理工大学酒店旅游管理博士学位和上海交通大学安泰MBA学位，深耕酒店旅游行业十余年。从 OTA 平台到国际酒店集团，再到渠道与营销管理一线，我亲历了这个行业的黄金时代，也深刻感受到了数字化转型带来的挑战与机遇。我始终相信科技的力量能够驱动行业进步，而教育背景更让我具备了行业深度研究和商业战略落地的能力。</p>
+            <p>创立 AI酒旅实验室 & Mayflower AI，源于我对入境游市场的深刻洞察和对 AI 技术的坚定信念。我看到中国入境游的巨大潜力被长期低估，也意识到 AI 是打破行业瓶颈、重塑增长模式的关键。这不仅仅是一次创业，更是一次将行业经验、学术研究、技术趋势与国家战略相结合的探索。</p>
+            <p>我希望找到一位同样对 AI 和旅游行业充满热情，渴望用技术创造真正价值的技术合伙人。如果你也认同我们的愿景，渴望参与一个面向全球市场的、有实际商业价值的项目，我真诚地邀请你加入 Project MayFlower，与我一起，用 AI 为中国入境游注入新的活力，共同迎接这个千亿级市场的机遇！</p>
+        </div>
+        <div class="section-divider"></div>
+
+        <div class="section" id="project-mayflower">
+            <h2><span class="emoji">🌱</span>  Project MayFlower 是什么？</h2>
+            <p>一个专为 <strong>中国酒店与文旅行业</strong> 打造的 <strong>AI 原生智能体平台</strong>，聚焦 <strong>入境游精准获客</strong>，用 AI 重构内容生成、投放决策与增长路径。</p>
+            <p><strong>不是 ChatGPT 换皮工具，而是懂行业、有推理能力、具执行力的系统级智能营销中枢。</strong></p>
+        </div>
+        <div class="section-divider"></div>
+
+        <div class="section" id="problem">
+            <h2><span class="emoji">🧠</span>  解决国家级产业机会，而非“小问题”</h2>
+            <div class="highlight-box">
+                <p><span class="emoji">📉</span> 中国入境游 2024 年占 GDP 仅 <strong>0.3%</strong>，全球中位数 <strong>1.5%</strong>。</p>
+                <p><span class="emoji">📈</span> 提升至全球平均水平，意味着 <strong>千亿级美元市场增量空间</strong>。</p>
+            </div>
+            <p>行业痛点：</p>
+            <ul>
+                <li>酒店不懂海外内容，更不了解渠道算法与投放节奏</li>
+                <li>OTA 策略不透明、渠道碎片化、投放全靠经验猜</li>
+                <li>市场上充斥各种“AI工具”，但缺乏行业知识、无法实际落地</li>
+                <li>酒店主想转型，却没人能带他们进入智能时代</li>
+            </ul>
+            <p>我们要做的，就是用 AI，真正补上认知断链与执行断链。</p>
+        </div>
+        <div class="section-divider"></div>
+
+        <div class="section" id="progress">
+            <h2><span class="emoji">✅</span>  我们已经做了什么？</h2>
+            <p>我们不是想法阶段，而是已经迈出了第一步：</p>
+            <ul>
+                <li><strong>初代产品原型：Ask May 智能体</strong>（已上线腾讯元器平台+嵌入微信公众号）</li>
+                <li><strong>内容&知识结构搭建：</strong>输出行业研究10万+字，已有AI策略课与公众号矩阵</li>
+                <li><strong>商业验证：</strong>真实客户需求明确，部分已进入合作洽谈</li>
+                <li><strong>公司已注册：</strong>品牌为 AI酒旅实验室 & Mayflower AI，面向中英双语市场</li>
+                <li><strong>商业路径清晰：</strong>从咨询落地 → 工具系统化 → SaaS平台输出</li>
+            </ul>
+            <p>对了，悄悄说一句，已有意向投资人表达关注，项目正处于 MVP 打磨与融资节奏协同阶段。</p>
+        </div>
+        <div class="section-divider"></div>
+
+        <div class="section" id="roadmap">
+            <h2><span class="emoji">🛠️</span>  商业化路径 · 三步走</h2>
+
+            <div class="step-item">
+                <h3>① AI 咨询 + 营销代运营（已开展）</h3>
+                <p>• 多语种内容生成 + OTA/SEO 策略 + 入境引流投放</p>
+                <p>• 项目能交付、能赚钱、能打磨闭环</p>
+                <p>• 客户愿意付费，不依赖融资冷启动</p>
+            </div>
+
+            <div class="step-item">
+                <h3>② 构建 Ask May 智能体 MVP（你将主导）</h3>
+                <p>• 多语言知识库 + 内容任务链 + OTA策略推理</p>
+                <p>• LangChain / RAG / 多模型调用 + 结构化输入输出链路</p>
+                <p>• 初期部署于网页端 / 企业微信生态，快速验证可用性闭环</p>
+            </div>
+
+            <div class="step-item">
+                <h3>③ 打造 Mayflower AI SaaS 平台</h3>
+                <p>• 平台化 SaaS 系统：内容生成 / 渠道分发 / 投放反馈</p>
+                <p>• 模块订阅制 + 企业私有部署</p>
+                <p>• 目标是成为「中国版 Hospitality HubSpot」，连接行业上下游</p>
+            </div>
+        </div>
+        <div class="section-divider"></div>
+
+
+        <div class="section" id="who">
+            <h2><span class="emoji">🧩</span>  我在找谁？</h2>
+            <p>不是“能写代码的人”，而是愿意用 AI 改变行业、创造结构性价值的人。</p>
+            <p>你可能是：</p>
+            <ul>
+                <li><span class="emoji">👨‍💻</span> 正在做 AI Side Project 的 Builder</li>
+                <li><span class="emoji">💡</span> 思考如何从工具走向系统范式的人</li>
+                <li><span class="emoji">🤖</span> 想亲手做出一个真正可落地的智能系统</li>
+            </ul>
+            <p>你可能正在问：</p>
+            <ul>
+                <li>我写的技术，能不能真正解决一类人的问题？</li>
+                <li>有没有一个产品，是值得长期投入的？</li>
+                <li>有没有一个团队，既讲实战又有理想？</li>
+            </ul>
+            <p>如果是，那你很可能是我在找的那位 共建者。</p>
+        </div>
+        <div class="section-divider"></div>
+
+        <div class="section" id="skills">
+            <h2><span class="emoji">👨‍💻</span>  当然，我相信你一定具备：</h2>
+            <ul>
+                <li>扎实的开发能力（Python / Node.js）</li>
+                <li>熟悉LangChain / RAG / 多模型调用等框架，或愿意快速上手</li>
+                <li>能够独立推进小规模原型（无需完美，有结构即可）</li>
+                <li>对Agent系统、智能体架构、推理链条感兴趣</li>
+                <li><span class="emoji">✅</span> 最重要的是：你愿意与行业人共建真实场景的 AI 落地系统</li>
+            </ul>
+        </div>
+        <div class="section-divider"></div>
+
+        <div class="section" id="cooperation">
+            <h2><span class="emoji">🤝</span>  合作方式 ？</h2>
+            <ul>
+                <li><span class="emoji">✅</span> 初期可按 Sprint 合作，我按阶段支付酬劳，降低你的试错成本</li>
+                <li><span class="emoji">✅</span> 如果我们彼此信任，节奏对得上，我希望你成为 联合创始人 / 技术合伙人，参与战略共建</li>
+                <li><span class="emoji">✅</span> 商业闭环后，提供股权激励 + 技术方向主导权 + 长期收入分成</li>
+                <li><span class="emoji">✅</span> 一起进入融资、平台化扩展、生态构建阶段</li>
+            </ul>
+        </div>
+        <div class="section-divider"></div>
+
+        <div class="section" id="why-now">
+            <h2><span class="emoji">🚀</span>  为什么是现在？</h2>
+            <ul>
+                <li><span class="emoji">📈</span> 中国入境游市场处于低基数爆发前夜（0.3% → 1.5% GDP）</li>
+                <li><span class="emoji">⏳</span> AI能力临界，红利窗口正在关闭，再晚就只能用别人的系统</li>
+                <li><span class="emoji">🔍</span> 真正“懂行业+会落地”的AI系统，市场仍是空白</li>
+                <li><span class="emoji">🧱</span> 现在是构建认知壁垒与数据闭环的最佳时机</li>
+            </ul>
+            <p>我们正站在一个不靠卷技术、不靠砸钱，也能做出壁垒的入口期。窗口期不长，先行者将构建思维与数据闭环，后入者再难超越。</p>
+        </div>
+
+
+        <div class="contact-section" id="contact">
+            <h2><span class="emoji">📬</span>  联系我（带点理想，也带点问题）</h2>
+            <p><strong>May Yang | AI酒旅实验室</strong></p>
+            <p><a href="mailto:aprah77@hotmail.com" class="contact-button">发送邮件</a></p>
+            <p>微信 / 即刻 / LinkedIn 搜索：May Yang | AI酒旅实验室</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Project MayFlower - 用 AI 探索未来酒旅的无限可能 <span class="emoji">♾️</span></p>
+        </div>
+    </footer>
+
+</body>
+</html>
